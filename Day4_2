@@ -61,7 +61,9 @@ SNPs[1:10, 1:10]
 datSNP <- setupSNP(SNPs,6:40,sep="")
 xtabs(~ casco + snp10001, data=datSNP)
 
-independence_test(casco~snp10001, data=datSNP, teststat="quad", scores=list(snp10001=c(0,1,2)))
+independence_test(casco~snp10001, data=datSNP, teststat="quad", scores=list(snp10001=c
+
+(0,1,2)))
 
 #4) Regression Methods
 
@@ -110,12 +112,15 @@ head(res, n=10)
 library(qqman)
 head(gwasResults, n=6)
 
-manhattan(gwasResults, main = "Manhattan Plot", cex = 0.5, cex.axis = 0.8, col = c("blue4", "orange3"))
+manhattan(gwasResults, main = "Manhattan Plot", cex = 0.5, cex.axis = 0.8, col = c("blue4", 
+
+"orange3"))
 
 #2.  Rare variant association tests​
 
 #1) Burden test
 
+install.packages("seqMeta")
 library(seqMeta)
 data(seqMetaExample)
 head(Z1)
