@@ -22,6 +22,7 @@
 install.packages("SNPassoc")
 install.packages("coin")
 install.packages("qqman")
+install.packages("seqMeta")
 
 #패키지 및 데이터 불러오기
 
@@ -29,6 +30,8 @@ library(SNPassoc)
 library(coin)
 library(qqman)
 data(SNPs)
+library(seqMeta)
+data(seqMetaExample)
 
 #1. Statistical tests for association​
 
