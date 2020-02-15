@@ -29,6 +29,7 @@ R
 install.packages("SNPassoc")
 install.packages("coin")
 install.packages("qqman")
+install.packages("devtools")
 install.packages("seqMeta")​
 
 #패키지 및 데이터 불러오기
