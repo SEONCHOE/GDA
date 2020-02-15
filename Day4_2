@@ -1,3 +1,10 @@
+
+1. Statistical tests
+
+
+################# Virtual box 에서 R 사용하기#############
+source activate lecture2
+R
 ################## R STUDIO 단축키######################
 
 # 1. 코드실행
@@ -22,7 +29,7 @@
 install.packages("SNPassoc")
 install.packages("coin")
 install.packages("qqman")
-install.packages("seqMeta")
+install.packages("seqMeta")​
 
 #패키지 및 데이터 불러오기
 
@@ -30,7 +37,7 @@ library(SNPassoc)
 library(coin)
 library(qqman)
 data(SNPs)
-library(seqMeta)
+library(seqMeta)​
 data(seqMetaExample)
 
 #1. Statistical tests for association​
@@ -154,3 +161,46 @@ out.skat[ order(out.skat$p), ]
 out.skat <- skatOMeta(cohort1, cohort2, SNPInfo = SNPInfo)
 
 out.skat[ order(out.skat$p), ]
+
+
+###############################################
+2. LD calculation based on 1000 Genomes data
+
+cd vcf
+ls
+vcftools --gzvcf JPT_part.vcf.gz --plink-tped --out JPT --phased
+ls
+more JPT.tped
+more JPT.tfam
+plink --tped JPT.tped --tfam JPT.tfam --make-bed --out ./JPT --noweb
+head JPT.bim 
+head JPT.fam 
+head JPT.nosex 
+plink --noweb --bfile JPT --ld rs11646260 rs59578934
+plink --noweb --bfile JPT --ld rs11646260 rs8063575
+plink --bfile JPT --chr 16 --from-bp 54000000 --to-bp 54050000 --ld-snp rs11646260 --r2 --ld-window-r2 0 --ld-window 999999 --ld-window-kb 99999 --noweb --out ./JPT
+ls
+head JPT.ld 
+cd ..
+cd plot
+ls
+R
+
+
+###############################################
+3. HLA alleles, HLA amino acids, SNPs imputation
+
+
+cd ..
+cd snp2hla
+ls
+SNP2HLA.csh 1958BC HM_CEU_REF 1958BC_IMPUTED plink 2000 1000
+ls
+head 1958BC_IMPUTED.bim
+head 1958BC_IMPUTED.fam
+head 1958BC_IMPUTED.dosage 
+plink --noweb --dosage 1958BC_IMPUTED.dosage noheader format=1 --fam 1958BC_IMPUTED.fam --logistic --out 1958_IMPUTED
+more 1958BC_IMPUTED.assoc.dosage 
+
+
+
