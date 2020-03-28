@@ -30,7 +30,7 @@ install.packages("SNPassoc")
 install.packages("coin")
 install.packages("qqman")
 install.packages("devtools")
-install.packages("seqMeta")​
+install.packages("seqMeta")
 
 #패키지 및 데이터 불러오기
 
@@ -38,10 +38,10 @@ library(SNPassoc)
 library(coin)
 library(qqman)
 data(SNPs)
-library(seqMeta)​
+library(seqMeta)
 data(seqMetaExample)
 
-#1. Statistical tests for association​
+#1. Statistical tests for association
 
 #1) Fisher's Exact Test
 
@@ -162,7 +162,21 @@ out.skat[ order(out.skat$p), ]
 out.skat <- skatOMeta(cohort1, cohort2, SNPInfo = SNPInfo)
 
 out.skat[ order(out.skat$p), ]
+##############################################
+#additional burden test
 
+tabix -p vcf data/1000G_exome_chr20_example_softFiltered.calls.vcf.gz
+
+epacts single --vcf data/1000G_exome_chr20_example_softFiltered.calls.vcf.gz --ped data/1000G_dummy_pheno.ped --min-maf 0.001 --chr 20 --pheno DISEASE --cov AGE --cov SEX --test b.score --anno --out out/test.single.b.score --run
+
+zcat out/test.single.b.score.epacts.gz |head
+head out/test.single.b.score.epacts.top5000^C
+
+epacts anno --in data/1000G_exome_chr20_example_softFiltered.calls.vcf.gz --out data/1000G_exome_chr20_example_softFiltered.calls.anno.vcf.gz
+
+epacts group --vcf data/1000G_exome_chr20_example_softFiltered.calls.anno.vcf.gz --groupf data/1000G_exome_chr20_example_softFiltered.calls.anno.grp --out out/test.gene.skat --ped data/1000G_dummy_pheno.ped --max-maf 0.05 --sepchr 20 --pheno QT --cov AGE --cov SEX --test skat --skat-o --run 2
+
+head out/test.gene.skat.epacts.top5000
 
 ###############################################
 2. LD calculation based on 1000 Genomes data
